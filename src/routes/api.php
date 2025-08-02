@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ExternalServiceController;
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
@@ -14,4 +15,6 @@ Route::prefix('users')->group(function () {
 Route::get('/health', function () {
     return ['status' => 'ok'];
 });
+
+Route::get('/external', [ExternalServiceController::class, 'index']);
 

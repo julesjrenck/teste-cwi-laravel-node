@@ -41,6 +41,15 @@ services:
     networks:
       - laravel
 
+  node:
+    build:
+      context: ./node-mock-service
+    container_name: node-mock-service
+    ports:
+      - "3001:3001"
+    networks:
+      - laravel
+
 networks:
   laravel:
 
