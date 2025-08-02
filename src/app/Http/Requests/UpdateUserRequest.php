@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -26,5 +28,14 @@ class UpdateUserRequest extends FormRequest
             'email' => 'sometimes|required|email|unique:users,email,' . $this->route('id'),
             'password' => 'sometimes|required|string|min:6',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Erro de validação.',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
