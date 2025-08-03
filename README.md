@@ -45,31 +45,38 @@ Este projeto é uma solução para o desafio técnico com foco em desenvolviment
 
 ### Subindo o ambiente:
 
+Na raiz do projeto execute:
+
 ```bash
-docker-compose up --build
+docker-compose up -d --build
 ```
 
 ## Laravel
 
-1. Na pasta do projeto Laravel, instale as dependências com Composer:
+1. Acesse a pasta do projeto Laravel:
+
+```bash
+cd src
+```
+2. Instale as dependências com Composer:
 
 ```bash
 composer install
 ```
 
-2. Copie o arquivo de exemplo .env.example para .env:
+3. Copie o arquivo de exemplo .env.example para .env:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Gere a chave da aplicação:
+4. Gere a chave da aplicação:
 
 ```bash
 docker-compose exec app php artisan key:generate
 ```
 
-4. Rode as migrations para criar as tabelas no banco:
+5. Rode as migrations para criar as tabelas no banco:
 
 ```bash
 docker-compose exec app php artisan migrate
@@ -77,10 +84,10 @@ docker-compose exec app php artisan migrate
 
 ## Microsserviço Node.js
 
-1.Acesse a pasta do microsserviço Node.js (ex: node-mock-service):
+1. Acesse a pasta do microsserviço Node.js (node-mock-service):
 
 ```bash
-cd node-mock-service
+cd ../node-mock-service/
 ```
 
 2. Instale as dependências com npm:
@@ -95,15 +102,25 @@ npm install
 node index.js
 ```
 
-A aplicação Laravel estará disponível em: [http://localhost:8000](http://localhost:8000)  
-O microsserviço Node.js estará disponível em: [http://localhost:3001](http://localhost:3001)
+Acesse: [http://localhost:8000/api/health](http://localhost:8000/api/health)  e verá {"status":"ok"}
+
+Acesse: [http://localhost:3001/api/info](http://localhost:3001/api/info) e verá {"service":"mock-service","version":"1.0","status":"running"}
+
+Acesse: [http://localhost:8000/api/external](http://localhost:8000/api/external) e verá {"success":true,"data":{"service":"mock-service","version":"1.0","status":"running"}}
 
 ## 🧪 Testes Automatizados
 
 Os testes estão organizados na pasta `tests/Feature`. Para executá-los:
 
+1. Vá a pasta do laravel
+
 ```bash
-docker-compose exec app php artisan test
+cd ../src
+```
+2. Rodar os testes da pasta Feature
+
+```bash
+docker-compose exec app php artisan test --testsuite=Feature
 ```
 
 ## ✅ Testes Implementados
